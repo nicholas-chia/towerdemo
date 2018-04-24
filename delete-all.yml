@@ -1,20 +1,20 @@
 ---
 - name: gather EC2 facts
   hosts: "{{ ec2_hosts }}"
-  gather_facts: false 
+  gather_facts: false
 
   vars:
     ec2_region: ap-southeast-1
     ec2_hosts: all
 
   tasks:
-  - name: gather facts 
+  - name: gather facts
     ec2_facts:
 
 - name: terminate hosts
-  hosts: "{{ ec2_hosts }}" 
+  hosts: "{{ ec2_hosts }}"
   gather_facts: false
-  connection: local  
+  connection: local
 
   vars:
     ec2_hosts: all
@@ -26,4 +26,4 @@
       instance_ids="{{ item }}"
       state=absent
       wait=True
-    with_items: hostvars[inventory_hostname]['ansible_ec2_instance_id'] 
+    with_items: "{{ hostvars[inventory_hostname]['ansible_ec2_instance_id'] }}"
